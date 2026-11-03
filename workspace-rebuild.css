@@ -675,3 +675,86 @@ body.no-motion *{animation-duration:.01ms!important;transition-duration:.01ms!im
  #atelierPalette:not([hidden]) .palettePanel{animation:wsPaletteReveal .2s var(--ws-curve) both}
  @keyframes wsPaletteReveal{from{opacity:.4;transform:translateY(-9px) scale(.985)}to{opacity:1;transform:none}}
 }
+
+/* Identity continuity for specialized financial stories and planning stages. */
+body.light #dashboardPage .dailyHero{
+ background:radial-gradient(ellipse 58% 75% at 90% 0%,rgba(100,236,217,.22),transparent 72%),linear-gradient(130deg,#154e51,#0c343d 52%,#10282f)!important;
+ border-color:rgba(142,235,223,.25)!important;
+ box-shadow:0 24px 54px rgba(4,49,58,.17),inset 0 1px rgba(255,255,255,.13)!important
+}
+#dashboardPage .dailyHero>span,#dashboardPage .dailyHero>small,#dashboardPage .dailyHero>strong{color:#eafcf9!important}
+#dashboardPage .dailyHero #heroAccounts .heroAccount,
+body:not(.no-motion) #dashboardPage .dailyHero #heroAccounts .heroAccount{
+ animation:none!important;
+ transition:background-color .2s,border-color .2s,box-shadow .2s,transform .2s var(--ws-curve)!important;
+}
+#dashboardPage .dailyHero #heroAccounts .heroAccount::after{animation:none!important;opacity:.18}
+#financialStoryContent .fs-chapter,
+#financialStoryContent .fs-panel,
+body.light #financialStoryContent .fs-chapter,
+body.light #financialStoryContent .fs-panel{
+ background:var(--ws-surface)!important;
+ border:1px solid var(--ws-edge)!important;
+ border-radius:var(--ws-radius)!important;
+ color:var(--ws-ink)!important;
+ box-shadow:var(--ws-elevation)!important;
+}
+#financialStoryContent .fs-controls,
+#financialStoryContent .fs-opening{
+ border-radius:var(--ws-radius)!important;
+ border-color:var(--ws-edge)!important;
+}
+#financialStoryContent :is(.fs-line,.fs-category,.fs-confidence,.fs-state){
+ border-color:var(--ws-edge)!important;
+}
+#financialStoryContent :is(.fs-chapter,.fs-panel) :is(h3,h4,strong){color:var(--ws-ink)}
+#financialStoryContent .fs-table-scroll{max-width:100%;overflow-x:auto}
+#financialStoryContent :is(select,input){
+ border-radius:12px!important;
+ background:var(--ws-inset)!important;
+ color:var(--ws-ink)!important;
+ border-color:var(--ws-edge)!important;
+}
+#fsPolicyPanel:not([hidden]){backdrop-filter:blur(10px)}
+#fsPolicyForm{border-radius:var(--ws-radius)!important}
+.planning-shell{
+ --plan-bg:#0e3036;
+ --plan-deep:#0b242c;
+ --plan-ink:#f2fcfa;
+ --plan-soft:#b5d5d6;
+ --plan-line:rgba(216,255,252,.16);
+ background:radial-gradient(ellipse 70% 55% at 85% -20%,rgba(37,168,157,.17),transparent 80%),var(--plan-bg)!important
+}
+.planning-shell :is(.planning-review,.planning-intro,.planning-question,.planning-approvals,.planning-report) {
+ border-color:rgba(216,255,252,.12);
+}
+.planning-shell :is(.planning-primary,.planning-exit){
+ border-radius:13px;
+}
+.moreMenu:not(.hidden){backdrop-filter:blur(9px)}
+.moreMenu .moreMenuPanel{
+ border:1px solid var(--ws-edge)!important;
+ border-radius:24px!important;
+ background:var(--ws-surface-strong)!important;
+ color:var(--ws-ink)!important;
+ box-shadow:0 30px 80px rgba(0,0,0,.24)!important;
+}
+.moreMenu :is(.moreMenuHead h2,.menuLink){color:var(--ws-ink)}
+.moreMenu .menuLink{
+ border-radius:14px!important;
+ border:1px solid var(--ws-edge)!important;
+ background:var(--ws-inset)!important;
+}
+.moreMenu .menuIcon{color:var(--accent,#099999)!important}
+#toast:not(:empty){border-radius:15px;box-shadow:var(--ws-elevation)}
+.page .txEnd .movementMoreMenu{
+ background:var(--ws-surface-strong)!important;
+ border:1px solid var(--ws-edge)!important;
+ border-radius:13px!important;
+ box-shadow:var(--ws-elevation)!important;
+}
+.page .txEnd .movementMoreMenu button{color:var(--ws-ink)}
+@media(max-width:760px){
+ #financialStoryContent .fs-chapter,#financialStoryContent .fs-panel{border-radius:18px!important}
+ .moreMenu .moreMenuPanel{border-radius:20px!important}
+}
