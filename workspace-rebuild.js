@@ -97,6 +97,15 @@ if(brand){
    try{localStorage.setItem(storageKey,compact?`1`:`0`)}catch{}
  });
 }
+const mobileMenuButton=document.createElement(`button`);
+mobileMenuButton.type=`button`;
+mobileMenuButton.id=`atelierMobileMenuBtn`;
+mobileMenuButton.setAttribute(`aria-label`,`فتح قائمة الصفحات`);
+mobileMenuButton.setAttribute(`aria-controls`,`mobileMore`);
+mobileMenuButton.setAttribute(`aria-haspopup`,`dialog`);
+mobileMenuButton.innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>`;
+mobileMenuButton.addEventListener(`click`,()=>document.getElementById(`mobileMoreBtn`)?.click());
+greeting.append(mobileMenuButton);
 const searchBtn=document.createElement(`button`);
 searchBtn.id=`atelierSearchBtn`;
 searchBtn.type=`button`;
