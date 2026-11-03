@@ -270,3 +270,44 @@ body:not(.planning-open) #dashboardPage #cmStage .dailyHero>.btn.primary{
  background:linear-gradient(110deg,#ffac75,#ff915d)!important;color:#14212a!important;
  border-color:rgba(255,255,255,.25)!important;
 }
+
+/* QA repair: legacy desktop grid must not re-flow the new feature stage into separate columns. */
+body:not(.planning-open) #dashboardPage #dailyHome{
+ display:block!important;grid-template-columns:none!important;grid-template-rows:none!important;
+ width:100%!important;min-width:0!important;margin-bottom:24px!important;
+}
+body:not(.planning-open) #dashboardPage #cmStage{
+ display:grid!important;grid-template-columns:minmax(0,1.64fr) minmax(295px,.78fr)!important;
+ width:100%!important;min-width:0!important;grid-column:auto!important;grid-row:auto!important;
+}
+body:not(.planning-open) #dashboardPage .cmMonthDetail{
+ width:100%!important;max-width:100%!important;margin:0 0 24px!important;
+ grid-column:auto!important;grid-row:auto!important;
+}
+body:not(.planning-open) #dashboardPage .cmMonthDetail .heroGrid{
+ display:block!important;width:100%!important;grid-template-columns:1fr!important;
+}
+body:not(.planning-open) #dashboardPage #cmStage .cmAside .planning-launch{
+ display:flex!important;flex-direction:column;justify-content:space-between;
+ visibility:visible!important;opacity:1!important;min-height:126px!important;
+ width:100%;height:auto!important;max-height:none!important;grid-area:auto!important;
+}
+body:not(.planning-open) #dashboardPage #cmStage .cmFeature .scrollDock{
+ width:100%;height:100%!important;max-height:none!important;
+ overflow:visible!important;position:static!important;grid-column:auto!important;grid-row:auto!important;
+}
+body:not(.planning-open) #dashboardPage #cmStage .cmFeature .dailyHero{
+ min-height:436px!important;
+}
+body.planning-open .cmIntro,body.planning-open .cmBackdrop{display:none!important}
+@media(min-width:761px) and (max-width:1170px){
+ body:not(.planning-open) #dashboardPage #cmStage{grid-template-columns:minmax(0,1.3fr) minmax(255px,.9fr)!important}
+}
+@media(max-width:760px),(pointer:coarse) and (max-device-width:600px){
+ body:not(.planning-open) #dashboardPage #cmStage{grid-template-columns:minmax(0,1fr)!important;gap:12px!important}
+ body:not(.planning-open) #dashboardPage #cmStage .cmFeature .dailyHero{min-height:275px!important}
+ body:not(.planning-open) #dashboardPage #cmStage .cmAside .planning-launch{
+  display:flex!important;min-height:109px!important;padding:18px!important
+ }
+ body:not(.planning-open) #dashboardPage .cmMonthDetail{margin:13px 0 23px!important}
+}
