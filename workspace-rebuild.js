@@ -11,6 +11,21 @@ const icons={
  search:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m16 16 4 4"/></svg>`
 };
 const pages=[...nav.querySelectorAll(`a[data-page]`)].map(node=>({node,key:node.dataset.page,name:node.querySelector(`span:last-child`)?.textContent.trim()||node.getAttribute(`title`)||node.dataset.page}));
+/* Keep every existing sidebar destination available in the mobile More sheet. */
+const moreGrid=document.querySelector(`#mobileMore .moreMenuGrid`);
+if(moreGrid){
+ for(const entry of pages){
+   if(moreGrid.querySelector(`[data-go="${entry.key}"]`))continue;
+   const a=document.createElement(`a`);
+   a.className=`menuLink`;
+   a.href=`?page=${encodeURIComponent(entry.key)}`;
+   a.dataset.go=entry.key;
+   const symbol=document.createElement(`span`);symbol.className=`menuIcon`;
+   symbol.innerHTML=entry.node.querySelector(`.ico`)?.innerHTML||`<span aria-hidden="true">◉</span>`;
+   const label=document.createElement(`span`);label.textContent=entry.name;
+   a.append(symbol,label);moreGrid.append(a);
+ }
+}
 const crumb=document.createElement(`div`);
 crumb.id=`atelierRouteCrumb`;
 crumb.setAttribute(`aria-live`,`polite`);
@@ -54,7 +69,7 @@ skip.addEventListener(`click`,event=>{
  if(target.classList?.contains(`page`)){
    target.setAttribute(`tabindex`,`-1`);
    target.focus({preventScroll:true});
-   target.scrollIntoView({block:`start`,behavior:motion()?`instant`:`smooth`});
+   target.scrollIntoView({block:`start`,behavior:motion()?`auto`:`smooth`});
  }else target.focus();
 });
 document.body.prepend(skip);
