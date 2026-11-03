@@ -845,3 +845,66 @@ body.light #financialStoryContent .fs-panel{
 @media(min-width:761px) and (max-width:1239px){
  #dashboardPage #dailyHome>.planning-launch{min-height:145px}
 }
+
+/* Verified reference direction: inset, self-contained navigation surface. */
+@media(min-width:761px){
+ body:not(.planning-open) .app:not(.hidden){
+  grid-template-columns:285px minmax(0,1fr)!important;
+ }
+ body:not(.planning-open) .sidebar,body.light:not(.planning-open) .sidebar{
+  top:14px!important;
+  height:calc(100dvh - 28px)!important;
+  margin:14px!important;
+  width:auto;
+  border:1px solid rgba(207,242,243,.12)!important;
+  border-radius:27px!important;
+  background:linear-gradient(165deg,rgba(37,53,65,.97),rgba(14,24,34,.98))!important;
+  box-shadow:0 20px 55px rgba(0,0,0,.14),inset 0 1px rgba(255,255,255,.07)!important;
+ }
+ body:not(.planning-open) .main,body.light:not(.planning-open) .main{
+  padding-top:16px!important;
+ }
+ .topbar{
+  border-radius:22px!important;
+  border-color:rgba(185,218,219,.15)!important;
+  background:linear-gradient(125deg,color-mix(in srgb,var(--ws-surface) 92%,#415564),var(--ws-surface))!important;
+ }
+ body.light .topbar{
+  border-color:var(--ws-edge)!important;
+  background:rgba(255,255,255,.88)!important;
+ }
+}
+@media(min-width:761px) and (max-width:1160px){
+ body:not(.planning-open) .app:not(.hidden){grid-template-columns:110px minmax(0,1fr)!important}
+}
+@media(min-width:1240px){
+ #dashboardPage #dailyHome>.scrollDock>.dailyHero{
+   height:auto!important;
+   min-height:274px!important;
+ }
+}
+#atelierMobileMenuBtn{display:none}
+@media(max-width:760px){
+ .topbar .greeting{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) 42px;
+  grid-template-rows:auto auto auto;
+  align-items:center;
+  gap:1px 10px;
+ }
+ .topbar .greeting #atelierRouteCrumb{grid-column:1;grid-row:1;margin:0}
+ .topbar .greeting h1{grid-column:1;grid-row:2}
+ .topbar .greeting p{grid-column:1;grid-row:3}
+ #atelierMobileMenuBtn{
+  display:grid;place-items:center;
+  grid-column:2;grid-row:1/4;
+  width:42px;height:42px;
+  border:1px solid var(--ws-edge);
+  border-radius:13px;
+  background:var(--ws-inset);
+  color:var(--ws-ink);
+  cursor:pointer;
+ }
+ #atelierMobileMenuBtn svg{width:19px;height:19px;stroke:currentColor}
+ .topbar{background:var(--ws-surface)!important}
+}
