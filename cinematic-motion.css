@@ -1,0 +1,239 @@
+/* Cinematic Financial OS · Motion and composition layer · 2026-11-03
+   No source data, forms, routing, permissions or financial logic modified. */
+:root{--cm-orange:#ff9b60;--cm-tangerine:#ffb187;--cm-teal:var(--accent,#099999);--cm-ink:#f3f4f2;--cm-muted:#adb7bd;--cm-panel:rgba(29,36,48,.84);--cm-line:rgba(216,232,236,.17);--cm-ease:cubic-bezier(.16,1,.3,1)}
+body.light{--cm-ink:#1c2833;--cm-muted:#68747f;--cm-panel:rgba(255,255,255,.88);--cm-line:rgba(32,65,78,.12)}
+body:not(.planning-open) .app:not(.hidden){padding:14px!important;gap:14px!important;grid-template-columns:260px minmax(0,1fr)!important;background:linear-gradient(140deg,#151c27,#101924 40%,#1a2830)!important;min-height:100dvh}
+body.light:not(.planning-open) .app:not(.hidden){background:linear-gradient(140deg,#e8eef0,#f1f5f5)!important}
+body:not(.planning-open) .sidebar,body.light:not(.planning-open) .sidebar{
+  position:sticky!important;top:14px!important;height:calc(100dvh - 28px)!important;
+  border-radius:28px!important;padding:23px 13px 16px!important;
+  background:linear-gradient(160deg,rgba(39,48,63,.96),rgba(17,25,36,.98))!important;
+  border:1px solid rgba(225,241,250,.13)!important;
+  box-shadow:0 20px 58px rgba(4,12,22,.26),inset 0 1px rgba(255,255,255,.08)!important;
+  scrollbar-width:thin;
+}
+body:not(.planning-open) .sidebar .brand{padding-bottom:18px!important;border-bottom-color:rgba(255,255,255,.1)}
+body:not(.planning-open) .sidebar .nav{position:relative;isolation:isolate}
+body:not(.planning-open) .sidebar .nav a[data-page]{
+ position:relative;z-index:1;border-radius:15px!important;min-height:46px;
+ color:#c9ced4!important;transition:transform .32s var(--cm-ease),color .24s!important;
+}
+body:not(.planning-open) .sidebar .nav a[data-page].active,body:not(.planning-open) .sidebar .nav a[data-page][aria-current="page"]{
+ color:#10171e!important;background:transparent!important;border-color:transparent!important;box-shadow:none!important;
+}
+body:not(.planning-open) .sidebar .nav a[data-page].active :is(.ico,.ico svg,.ico i){color:#1f252e!important}
+body:not(.planning-open) .sidebar .nav .cmNavigationGlider{
+ position:absolute;inset:0 auto auto 0;width:100px;height:45px;
+ border-radius:15px;background:linear-gradient(125deg,#ffb175,#ff9357);
+ box-shadow:0 11px 26px rgba(252,132,73,.25),inset 0 1px rgba(255,255,255,.55);
+ pointer-events:none;z-index:0;
+ transition:transform .5s var(--cm-ease),height .45s var(--cm-ease),width .45s var(--cm-ease),opacity .2s;
+ will-change:transform;
+}
+body:not(.planning-open) .sidebar .navSectionLabel{color:#929aa8!important}
+body:not(.planning-open) .main,body.light:not(.planning-open) .main{
+ position:relative;isolation:isolate;
+ padding:0 clamp(12px,1.2vw,22px) 64px!important;
+ background:transparent!important;
+}
+.cmBackdrop{
+ position:fixed;pointer-events:none;z-index:-1;inset:0;
+ overflow:hidden;transform:translateZ(0);
+}
+.cmBackdrop .cmGrid{
+ position:absolute;inset:0;opacity:.24;
+ background-image:linear-gradient(rgba(160,207,217,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(160,207,217,.045) 1px,transparent 1px);
+ background-size:80px 80px;
+ mask-image:linear-gradient(140deg,transparent 1%,black 49%,transparent 94%);
+}
+.cmBackdrop .cmAura{position:absolute;width:55vmax;aspect-ratio:1;filter:blur(100px);border-radius:50%;opacity:.27;will-change:transform;animation:cmAuraFloat 19s ease-in-out infinite alternate}
+.cmBackdrop .cmAuraA{top:-31vmax;right:-12vmax;background:radial-gradient(circle,#3d8f8a,transparent 65%)}
+.cmBackdrop .cmAuraB{bottom:-38vmax;left:-16vmax;background:radial-gradient(circle,#df8655,transparent 67%);animation-duration:23s;animation-direction:alternate-reverse;opacity:.18}
+.cmBackdrop .cmStars{position:absolute;inset:0;opacity:.28;background-image:radial-gradient(circle at 11% 25%,#e2ffff 1px,transparent 1.6px),radial-gradient(circle at 70% 44%,#ffd4b2 1px,transparent 1.6px),radial-gradient(circle at 85% 70%,#b8f7ee 1px,transparent 1.6px);background-size:310px 280px,430px 390px,560px 480px}
+body.light .cmBackdrop .cmAura{opacity:.075}
+body.light .cmBackdrop .cmGrid{opacity:.2}
+@keyframes cmAuraFloat{0%{transform:translate3d(-4%,-3%,0) scale(1)}50%{transform:translate3d(5%,8%,0) scale(1.12)}100%{transform:translate3d(-1%,2%,0) scale(.97)}}
+body:not(.planning-open) .topbar,body.light:not(.planning-open) .topbar{
+ min-height:65px;margin-bottom:18px!important;
+ background:rgba(31,40,53,.66)!important;color:var(--cm-ink)!important;
+ border:1px solid rgba(209,228,232,.15)!important;
+ border-radius:20px!important;padding:10px 16px!important;
+ box-shadow:0 12px 30px rgba(3,8,18,.13),inset 0 1px rgba(255,255,255,.04)!important;
+ backdrop-filter:blur(30px);
+}
+body.light:not(.planning-open) .topbar{background:rgba(255,255,255,.65)!important;border-color:var(--cm-line)!important}
+.topbar .greeting h1,.topbar .greeting p{display:none!important}
+.topbar #atelierRouteCrumb{margin:0;font-size:12px;color:var(--cm-muted)}
+.topbar #atelierRouteCrumb .current{color:var(--cm-ink)}
+body:not(.planning-open) .topbar .topActions .circleBtn{
+ background:rgba(255,255,255,.055)!important;border:1px solid var(--cm-line)!important;
+ border-radius:13px!important;transition:transform .3s,background .3s,box-shadow .3s;
+}
+.topbar .circleBtn:hover{transform:rotate(-8deg) scale(1.045);box-shadow:0 10px 24px rgba(0,0,0,.12)}
+.cmIntro{
+ min-height:175px;display:flex;align-items:center;justify-content:space-between;
+ overflow:hidden;position:relative;isolation:isolate;
+ padding:12px clamp(12px,2vw,28px) 27px;gap:20px;
+ color:var(--cm-ink);
+}
+.cmIntroCopy{position:relative;z-index:2;max-width:min(100%,850px)}
+.cmOverline{display:flex;align-items:center;gap:11px;font-size:11px;font-weight:700;color:var(--cm-muted)}
+.cmOverline i{width:24px;height:1px;background:var(--cm-line)}
+.cmOverline small{font-size:9px;letter-spacing:.2em;color:var(--cm-orange);direction:ltr}
+.cmLiveDot{width:8px;height:8px;border-radius:50%;background:var(--cm-orange);box-shadow:0 0 0 6px rgba(255,155,96,.12),0 0 22px rgba(255,155,96,.45);animation:cmBlink 3.4s ease-in-out infinite}
+@keyframes cmBlink{50%{box-shadow:0 0 0 11px rgba(255,155,96,0),0 0 35px rgba(255,155,96,.15)}}
+.cmIntro h2{margin:12px 0 4px;color:var(--cm-ink);font-size:clamp(28px,3.7vw,52px);font-weight:800;line-height:1.4;letter-spacing:-.055em;text-wrap:balance}
+.cmIntro p{margin:0;font-size:12px;line-height:1.8;color:var(--cm-muted)}
+.cmOrbitStage{position:relative;flex:0 0 156px;height:156px;opacity:.7;pointer-events:none}
+.cmOrbit{position:absolute;inset:10%;border:1px solid rgba(158,229,218,.22);border-radius:50%;animation:cmOrbitSpin 18s linear infinite}
+.cmOrbit::after{content:"";width:7px;height:7px;position:absolute;left:50%;top:-3px;background:var(--cm-orange);border-radius:50%;box-shadow:0 0 13px var(--cm-orange)}
+.cmOrbitTwo{inset:22%;border-style:dashed;animation-duration:13s;animation-direction:reverse;transform-origin:center}
+.cmOrbitTwo::after{background:#42cfc4;box-shadow:0 0 13px #42cfc4}
+.cmOrbitThree{inset:3%;animation-duration:29s;border-color:rgba(235,243,249,.08)}
+.cmOrbitCenter{position:absolute;inset:37%;display:grid;place-items:center;background:rgba(255,255,255,.045);border:1px solid var(--cm-line);border-radius:16px;color:var(--cm-orange);backdrop-filter:blur(9px)}
+.cmOrbitCenter svg{width:31px;height:31px}
+@keyframes cmOrbitSpin{to{transform:rotate(360deg)}}
+.cmScrollProgress{position:fixed;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--cm-teal),var(--cm-orange));transform:scaleX(0);transform-origin:left;z-index:10015;pointer-events:none}
+.cmStage{
+ display:grid!important;grid-template-columns:minmax(0,1.72fr) minmax(300px,.78fr);
+ gap:18px;min-width:0;margin:0 0 18px;
+}
+.cmFeature,.cmAside{min-width:0;display:flex;flex-direction:column;gap:15px}
+.cmFeature .scrollDock,.cmFeature>.dailyHero{position:static!important;inset:auto!important;max-height:none!important;overflow:visible!important;box-shadow:none!important;flex:1}
+.cmStage .dailyHero{
+ display:grid!important;
+ height:100%!important;min-height:445px!important;
+ border:1px solid rgba(231,247,244,.16)!important;
+ border-radius:29px!important;
+ padding:clamp(22px,3.5vw,46px)!important;
+ color:#f6f9f6!important;
+ background:radial-gradient(ellipse 70% 80% at 110% 0%,rgba(247,158,105,.27),transparent 72%),linear-gradient(120deg,#263a48,#153d45 52%,#12313d)!important;
+ box-shadow:0 22px 55px rgba(3,15,26,.21),inset 0 1px rgba(255,255,255,.16)!important;
+ position:relative;overflow:hidden!important;isolation:isolate;
+}
+body.light .cmStage .dailyHero{color:#fff!important;background:radial-gradient(ellipse 70% 80% at 110% 0%,rgba(247,158,105,.23),transparent 72%),linear-gradient(120deg,#263a48,#153d45 52%,#12313d)!important}
+.cmStage .dailyHero::before{
+ content:"";position:absolute;inset:-30% -45%;z-index:-1;pointer-events:none;
+ background:conic-gradient(from 110deg at 70% 45%,transparent 0 40%,rgba(116,240,216,.11) 47%,transparent 52% 100%);
+ animation:cmHeroSweep 16s linear infinite;opacity:.85;
+}
+.cmStage .dailyHero::after{border-color:rgba(255,255,255,.12)!important}
+@keyframes cmHeroSweep{to{transform:rotate(360deg)}}
+.cmStage .dailyHero>strong{font-size:clamp(38px,4vw,60px)!important;letter-spacing:-.04em}
+.cmStage .dailyHero>.btn.primary{
+ min-height:50px!important;background:linear-gradient(110deg,#ffac75,#ff915d)!important;
+ color:#14212a!important;border-color:rgba(255,255,255,.25)!important;
+ font-weight:800;box-shadow:0 13px 30px rgba(255,130,80,.25)!important;
+}
+.cmStage .dailyHero>.btn.primary:hover{box-shadow:0 17px 34px rgba(255,130,80,.4)!important}
+.cmStage .dailyHero #heroAccounts{align-self:center}
+.cmStage .dailyHero #heroAccounts .heroAccount{
+ background:rgba(15,32,39,.37)!important;border:1px solid rgba(220,255,251,.16)!important;
+ box-shadow:inset 0 1px rgba(255,255,255,.08)!important;
+ backdrop-filter:blur(16px);border-radius:17px!important;
+}
+.cmStage .planning-launch{
+ flex:0 0 auto;min-height:136px;border-radius:23px!important;
+ background:linear-gradient(132deg,rgba(255,165,113,.21),rgba(45,51,67,.77) 55%,rgba(25,42,51,.9))!important;
+ border:1px solid rgba(255,176,117,.28)!important;
+ color:#f2f5f3!important;padding:22px!important;
+ box-shadow:0 19px 42px rgba(0,0,0,.15)!important;
+ overflow:hidden;position:relative;
+}
+.cmStage .planning-launch :is(strong,small,em,i,svg){color:#f0f4f5!important}
+.cmStage .planning-launch strong{font-size:clamp(18px,2.1vw,28px);line-height:1.45}
+.cmStage .planning-launch::before{
+ content:"";position:absolute;width:110%;height:180%;left:-150%;top:-40%;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.13) 49%,transparent 60%);transform:skew(-16deg);transition:left .8s var(--cm-ease);pointer-events:none;
+}
+.cmStage .planning-launch:hover::before{left:130%}
+.cmStage .quickColumn{
+ display:flex!important;flex-direction:column!important;gap:12px!important;
+ min-height:0;flex:1;
+}
+.cmStage .quickColumn .quickCard{background:var(--cm-panel)!important;border:1px solid var(--cm-line)!important;border-radius:22px!important;box-shadow:0 15px 32px rgba(5,13,22,.1)!important;min-height:110px;position:relative;overflow:hidden}
+.cmStage .quickColumn .quickCard.liquidity{flex:1;background:linear-gradient(140deg,rgba(31,61,66,.88),rgba(33,40,55,.9))!important}
+.cmStage .quickColumn .quickPair{display:grid!important;grid-template-columns:1fr 1fr!important;gap:12px!important}
+.cmStage .quickColumn .quickCard strong{font-size:clamp(17px,1.7vw,26px)!important;line-height:1.4;color:var(--cm-ink)!important}
+.cmStage .quickColumn .quickCard>span{color:var(--cm-muted)!important}
+.cmMonthDetail .heroGrid{display:block!important;grid-template-columns:1fr!important;margin-bottom:24px!important}
+.cmMonthDetail .balanceHero{background:linear-gradient(120deg,rgba(31,41,55,.88),rgba(24,47,53,.85))!important;border:1px solid var(--cm-line)!important;border-radius:25px!important;min-height:280px!important;box-shadow:0 16px 42px rgba(8,16,27,.14)!important}
+.cmMonthDetail .balanceHero .balanceNumber>strong{color:#f3f6f4!important}
+#dashboardPage #dailyHome>.sectionHead{margin-block:28px 12px!important}
+body:not(.planning-open) .page :is(.panel,.accountCard,.settingCard,.categoryCard,.quickCard),
+body:not(.planning-open) #financialStoryContent :is(.fs-panel,.fs-chapter){
+ background:var(--cm-panel)!important;border:1px solid var(--cm-line)!important;
+ border-radius:23px!important;box-shadow:0 14px 37px rgba(3,12,22,.13),inset 0 1px rgba(255,255,255,.04)!important;
+ backdrop-filter:blur(23px);
+}
+.page :is(.panel,.accountCard,.settingCard,.categoryCard,.quickCard){position:relative;isolation:isolate;transition:border-color .32s,box-shadow .32s,transform .42s var(--cm-ease)!important}
+.page :is(.panel,.accountCard,.settingCard,.categoryCard,.quickCard)::after{
+ content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;
+ background:radial-gradient(360px circle at var(--cm-x,50%) var(--cm-y,50%),rgba(107,227,211,.10),transparent 70%);
+ opacity:0;transition:opacity .25s;
+}
+@media(hover:hover) and (pointer:fine){
+ .page :is(.panel,.accountCard,.settingCard,.categoryCard,.quickCard):hover{border-color:rgba(142,220,212,.28)!important;box-shadow:0 24px 55px rgba(3,12,22,.19),inset 0 1px rgba(255,255,255,.08)!important}
+ .page :is(.panel,.accountCard,.settingCard,.categoryCard,.quickCard):hover::after{opacity:1}
+}
+.page .sectionHead :is(h1,h2){color:var(--cm-ink)!important}
+.page .sectionHead p{color:var(--cm-muted)!important}
+body:not(.planning-open) .page .btn.primary,body:not(.planning-open) .modal .btn.primary{
+ background:linear-gradient(115deg,var(--cm-teal),#1bb5b1)!important;color:#fff!important;
+ box-shadow:0 8px 19px rgba(12,142,143,.18)!important;
+}
+.page .btn,.circleBtn,.sidebar a[data-page],.reportTabs button,.topActions button{overflow:hidden}
+.cmRipple{
+ position:absolute;pointer-events:none;z-index:5;width:16px;height:16px;margin:-8px;
+ border-radius:50%;background:rgba(255,255,255,.55);transform:scale(0);animation:cmRipple .62s ease-out both;
+}
+@keyframes cmRipple{to{opacity:0;transform:scale(18)}}
+.cmWipe{position:absolute;inset:95px 0 0;z-index:12;pointer-events:none;background:linear-gradient(105deg,rgba(11,26,37,.28),rgba(23,99,102,.43) 45%,rgba(255,158,99,.28))}
+.modal:not(.hidden) .modalCard,.moreMenu:not(.hidden) .moreMenuPanel{box-shadow:0 36px 100px rgba(0,0,0,.28)!important}
+body:not(.planning-open) #auth.auth:not(.hidden) .authVisual{background:radial-gradient(ellipse at 20% 20%,rgba(255,152,100,.18),transparent 60%),linear-gradient(135deg,#283847,#0b2630 70%)!important}
+#auth .authVisual::before{content:"";position:absolute;inset:5%;pointer-events:none;border:1px solid rgba(255,255,255,.07);border-radius:40px;animation:cmBreathe 12s ease-in-out infinite alternate}
+@keyframes cmBreathe{to{transform:scale(.98);opacity:.5}}
+@media(min-width:761px) and (max-width:1170px){
+ body:not(.planning-open) .app:not(.hidden){grid-template-columns:90px minmax(0,1fr)!important}
+ .cmStage{grid-template-columns:minmax(0,1.35fr) minmax(255px,.9fr)!important}
+ .cmStage .dailyHero{min-height:390px!important;padding:22px!important}
+ .cmOrbitStage{flex-basis:120px;height:120px}
+}
+@media(max-width:760px),(pointer:coarse) and (max-device-width:600px){
+ body:not(.planning-open) .app:not(.hidden){display:block!important;padding:0!important;min-height:100dvh}
+ body:not(.planning-open) .main,body.light:not(.planning-open) .main{padding:12px 12px calc(114px + env(safe-area-inset-bottom))!important}
+ body:not(.planning-open) .sidebar,body.light:not(.planning-open) .sidebar{
+  position:fixed!important;top:auto!important;inset:auto 9px calc(9px + env(safe-area-inset-bottom))!important;
+  height:auto!important;min-height:0!important;border-radius:20px!important;padding:6px!important;
+ }
+ body:not(.planning-open) .topbar{min-height:60px;margin-bottom:12px!important}
+ body:not(.planning-open) .topbar .greeting h1{display:none!important}
+ .cmIntro{min-height:135px;padding:10px 7px 18px}
+ .cmIntro h2{font-size:clamp(26px,7vw,36px);margin-top:12px}
+ .cmIntro p{font-size:11px}
+ .cmOverline{font-size:10px}
+ .cmOverline small{font-size:8px}
+ .cmOrbitStage{flex:0 0 73px;height:73px;opacity:.4}
+ .cmOrbitCenter svg{width:17px;height:17px}
+ .cmStage{grid-template-columns:1fr!important;gap:12px}
+ .cmStage .dailyHero{min-height:285px!important;padding:22px 18px!important;border-radius:23px!important}
+ .cmStage .dailyHero>strong{font-size:clamp(29px,9vw,40px)!important}
+ .cmStage .planning-launch{min-height:104px;padding:17px!important;border-radius:19px!important}
+ .cmStage .planning-launch strong{font-size:20px}
+ .cmStage .quickColumn{display:grid!important;grid-template-columns:1fr!important;gap:10px!important}
+ .cmStage .quickColumn .quickCard{min-height:105px}
+ .cmStage .quickColumn .quickPair{gap:10px!important}
+ .cmMonthDetail .balanceHero{min-height:250px!important}
+ body:not(.planning-open) .page :is(.panel,.accountCard,.settingCard,.categoryCard,.quickCard){border-radius:19px!important}
+ .cmWipe{inset:60px 0 0}
+ .cmBackdrop .cmAura{filter:blur(65px);opacity:.15}
+ .cmNavigationGlider{display:none!important}
+ .topbar #atelierRouteCrumb{font-size:10px}
+}
+@media(max-width:370px){.cmOrbitStage{display:none}.cmIntro h2{font-size:26px}.cmStage .quickColumn .quickPair{grid-template-columns:1fr!important}}
+@media(prefers-reduced-motion:reduce){
+ .cmBackdrop .cmAura,.cmStage .dailyHero::before,.cmLiveDot,.cmOrbit,#auth .authVisual::before{animation:none!important}
+ .cmNavigationGlider{transition:none!important}
+ .cmRipple,.cmWipe{display:none!important}
+}
+body.no-motion .cmBackdrop .cmAura,body.no-motion .cmStage .dailyHero::before,body.no-motion .cmLiveDot,body.no-motion .cmOrbit,body.no-motion #auth .authVisual::before{animation:none!important}
+body.no-motion .cmRipple,body.no-motion .cmWipe{display:none!important}
