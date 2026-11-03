@@ -40,6 +40,27 @@ const openServer=folder=>new Promise(done=>{
      document.querySelectorAll(`main .page`).forEach(el=>el.classList.toggle(`active`,el.id===`dashboardPage`));
     });
     await page.screenshot({path:path.join(out,[version,viewport.name,`dashboard-shell`].join(`-`)+`.png`),animations:`disabled`,fullPage:true});
+    let cinematic=null;
+    if(version===`after`){
+     assert.equal(await page.locator(`#cmIntroTitle`).count(),1);
+     assert.equal(await page.locator(`#cmStage`).count(),1);
+     assert.equal(await page.locator(`#cmStage .cmFeature .dailyHero`).count(),1);
+     assert.equal(await page.locator(`#cmStage .cmAside .quickColumn`).count(),1);
+     assert.equal(await page.locator(`.cmMonthDetail .heroGrid`).count(),1);
+     cinematic=await page.evaluate(()=>({
+       background:!!document.querySelector(`.cmBackdrop`),
+       navGlider:!!document.querySelector(`.cmNavigationGlider`),
+       stageColumns:getComputedStyle(document.querySelector(`#cmStage`)).gridTemplateColumns,
+       horizontalOverflow:document.documentElement.scrollWidth>innerWidth+2,
+       reducedMotion:matchMedia(`(prefers-reduced-motion: reduce)`).matches
+     }));
+     assert.equal(cinematic.horizontalOverflow,false,`Cinematic dashboard must not overflow viewport`);
+     await page.emulateMedia({reducedMotion:`no-preference`});
+     await page.evaluate(()=>window.dispatchEvent(new CustomEvent(`salary:page`,{detail:`dashboard`})));
+     cinematic.motionActive=await page.locator(`.cmWipe`).count()>0;
+     assert.equal(cinematic.motionActive,true,`Page transitions should create animated wipe`);
+     await page.emulateMedia({reducedMotion:`reduce`});
+    }
     let searchChecked=false,collapsedChecked=false,mobileStoryReachable=false;
     if(version===`after`){
      if(viewport.name===`desktop`){
@@ -51,7 +72,7 @@ const openServer=folder=>new Promise(done=>{
      }else mobileStoryReachable=await page.locator(`#mobileMore .moreMenuGrid [data-go="financialStory"]`).count()>0;
     }
     const widths=await page.evaluate(()=>[document.documentElement.scrollWidth,window.innerWidth]);
-    report.runs.push({version,viewport:viewport.name,widths,searchChecked,collapsedChecked,mobileStoryReachable});
+    report.runs.push({version,viewport:viewport.name,widths,searchChecked,collapsedChecked,mobileStoryReachable,cinematic});
     await context.close();
    }
   }
