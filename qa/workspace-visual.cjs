@@ -63,6 +63,14 @@ const openServer=folder=>new Promise(done=>{
     const response=await page.goto(`https://demo.codeandchill.store/sorvo/`,{waitUntil:`domcontentloaded`,timeout:25000});
     await page.screenshot({path:path.join(out,[`reference`,vp.name].join(`-`)+`.png`),animations:`disabled`});
     const info=await page.evaluate(()=>({title:document.title,heading:document.querySelector(`h1`)?.textContent?.trim()||``,links:[...document.querySelectorAll(`nav a`)].slice(0,14).map(x=>x.textContent.trim()),width:document.documentElement.scrollWidth,viewport:innerWidth}));
+    await page.waitForTimeout(1800);
+    await page.screenshot({path:path.join(out,[`reference`,vp.name,`settled`].join(`-`)+`.png`),animations:`disabled`});
+    if(vp.name===`desktop`){
+      try{
+        const tab=page.locator(`nav a`).filter({hasText:`Analytics`}).first();
+        if(await tab.count()){await tab.click({timeout:4000});await page.waitForTimeout(600);await page.screenshot({path:path.join(out,`reference-desktop-analytics.png`),animations:`disabled`});info.analyticsClicked=true;}
+      }catch(error){info.analyticsClickError=String(error).slice(0,220)}
+    }
     report.reference.push({viewport:vp.name,httpStatus:response?.status()||null,...info});
    }catch(error){report.reference.push({viewport:vp.name,error:String(error).slice(0,320)})}
    await context.close();
