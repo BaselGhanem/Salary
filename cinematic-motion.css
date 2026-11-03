@@ -237,3 +237,36 @@ body:not(.planning-open) #auth.auth:not(.hidden) .authVisual{background:radial-g
 }
 body.no-motion .cmBackdrop .cmAura,body.no-motion .cmStage .dailyHero::before,body.no-motion .cmLiveDot,body.no-motion .cmOrbit,body.no-motion #auth .authVisual::before{animation:none!important}
 body.no-motion .cmRipple,body.no-motion .cmWipe{display:none!important}
+
+/* Retain cinematic hero and companion treatment above the generic card skin. */
+body:not(.planning-open) #dashboardPage #cmStage .dailyHero,
+body.light:not(.planning-open) #dashboardPage #cmStage .dailyHero{
+ background:radial-gradient(ellipse 70% 80% at 110% 0%,rgba(247,158,105,.27),transparent 72%),linear-gradient(120deg,#263a48,#153d45 52%,#12313d)!important;
+ color:#f6f9f6!important;border-color:rgba(231,247,244,.16)!important;
+ box-shadow:0 22px 55px rgba(3,15,26,.21),inset 0 1px rgba(255,255,255,.16)!important;
+}
+body:not(.planning-open) #dashboardPage #cmStage .dailyHero .heroAccount{
+ background:rgba(15,32,39,.37)!important;color:#f6f9f6!important;
+ border-color:rgba(220,255,251,.16)!important;
+}
+body:not(.planning-open) #dashboardPage #cmStage .planning-launch,
+body.light:not(.planning-open) #dashboardPage #cmStage .planning-launch{
+ background:linear-gradient(132deg,rgba(255,165,113,.21),rgba(45,51,67,.77) 55%,rgba(25,42,51,.9))!important;
+ color:#f2f5f3!important;border-color:rgba(255,176,117,.28)!important;
+}
+body:not(.planning-open) #dashboardPage #cmStage .quickColumn .quickCard{
+ background:var(--cm-panel)!important;
+ color:var(--cm-ink)!important;
+}
+body:not(.planning-open) #dashboardPage #cmStage .quickColumn .quickCard.liquidity{
+ background:linear-gradient(140deg,rgba(31,61,66,.88),rgba(33,40,55,.9))!important;
+}
+body:not(.planning-open) #dashboardPage .cmMonthDetail .balanceHero{
+ background:linear-gradient(120deg,rgba(31,41,55,.88),rgba(24,47,53,.85))!important;
+}
+body.light:not(.planning-open) #dashboardPage .cmMonthDetail .balanceHero{color:#fff!important}
+body.light:not(.planning-open) #dashboardPage .cmMonthDetail .balanceHero :is(span,strong,h2,small){color:#f5fafb!important}
+body:not(.planning-open) #dashboardPage #cmStage .dailyHero>.btn.primary{
+ background:linear-gradient(110deg,#ffac75,#ff915d)!important;color:#14212a!important;
+ border-color:rgba(255,255,255,.25)!important;
+}
