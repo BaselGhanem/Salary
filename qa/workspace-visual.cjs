@@ -55,6 +55,18 @@ const openServer=folder=>new Promise(done=>{
     await context.close();
    }
   }
+  report.reference=[];
+  for(const vp of [{name:`desktop`,width:1440,height:900},{name:`mobile`,width:390,height:844}]){
+   const context=await browser.newContext({viewport:{width:vp.width,height:vp.height},isMobile:vp.name===`mobile`,hasTouch:vp.name===`mobile`,reducedMotion:`reduce`});
+   const page=await context.newPage();
+   try{
+    const response=await page.goto(`https://demo.codeandchill.store/sorvo/`,{waitUntil:`domcontentloaded`,timeout:25000});
+    await page.screenshot({path:path.join(out,[`reference`,vp.name].join(`-`)+`.png`),animations:`disabled`});
+    const info=await page.evaluate(()=>({title:document.title,heading:document.querySelector(`h1`)?.textContent?.trim()||``,links:[...document.querySelectorAll(`nav a`)].slice(0,14).map(x=>x.textContent.trim()),width:document.documentElement.scrollWidth,viewport:innerWidth}));
+    report.reference.push({viewport:vp.name,httpStatus:response?.status()||null,...info});
+   }catch(error){report.reference.push({viewport:vp.name,error:String(error).slice(0,320)})}
+   await context.close();
+  }
  }finally{
   fs.writeFileSync(path.join(out,`report.json`),JSON.stringify(report,null,2));
   await browser.close();before.server.close();after.server.close();
