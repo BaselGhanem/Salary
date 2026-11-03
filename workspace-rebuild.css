@@ -758,3 +758,90 @@ body.light #financialStoryContent .fs-panel{
  #financialStoryContent .fs-chapter,#financialStoryContent .fs-panel{border-radius:18px!important}
  .moreMenu .moreMenuPanel{border-radius:20px!important}
 }
+
+/* Task-oriented dashboard reflow: the existing elements and IDs are not moved or cloned. */
+@media(min-width:1240px){
+ #dashboardPage #dailyHome{
+  display:grid;
+  grid-template-columns:minmax(0,1.72fr) minmax(290px,.86fr);
+  grid-template-rows:auto auto auto;
+  column-gap:clamp(14px,1.4vw,23px);
+  row-gap:15px;
+  align-items:start;
+  margin-bottom:clamp(24px,2.3vw,37px);
+ }
+ #dashboardPage #dailyHome>.scrollDock{
+  grid-column:1;grid-row:1;
+  align-self:stretch;min-width:0;
+  margin:0!important;
+ }
+ #dashboardPage #dailyHome>.scrollDock>.dailyHero{
+  min-height:274px;
+  height:100%;
+ }
+ #dashboardPage #dailyHome>.planning-launch{
+  grid-column:2;grid-row:1;
+  min-height:274px!important;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:25px;
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  padding:clamp(20px,2.4vw,30px)!important;
+  background:
+   radial-gradient(circle at 8% 92%,color-mix(in srgb,var(--accent,#099999) 21%,transparent),transparent 64%),
+   linear-gradient(135deg,var(--ws-inset),var(--ws-surface))!important;
+ }
+ #dashboardPage #dailyHome>.planning-launch::after{
+  content:"";
+  position:absolute;inset-inline-end:-60px;bottom:-105px;
+  width:245px;height:245px;
+  border:1px solid color-mix(in srgb,var(--accent,#099999) 22%,transparent);
+  border-radius:50%;box-shadow:0 0 0 34px color-mix(in srgb,var(--accent,#099999) 4%,transparent);
+  pointer-events:none;z-index:-1;
+ }
+ #dashboardPage #dailyHome>.planning-launch strong{
+  display:block;font-size:clamp(20px,2.2vw,27px)!important;line-height:1.5;
+ }
+ #dashboardPage #dailyHome>.planning-launch i{
+  display:grid;place-items:center;
+  width:42px;height:42px;
+  border-radius:13px;
+  background:var(--ws-tint);
+ }
+ #dashboardPage #dailyHome>.sectionHead:has(+ #dailyToday){
+  grid-column:1;grid-row:2;
+  margin:9px 0 0!important;
+  align-self:end;
+ }
+ #dashboardPage #dailyToday{
+  grid-column:1;grid-row:3;
+  min-height:94px;
+  align-self:stretch;
+ }
+ #dashboardPage #dailyHome>.sectionHead:has(+ #dailyShortcuts){
+  grid-column:2;grid-row:2;
+  margin:9px 0 0!important;
+  align-self:end;
+ }
+ #dashboardPage #dailyShortcuts{
+  grid-column:2;grid-row:3;
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:9px;
+  align-self:start;
+ }
+ #dashboardPage #dailyShortcuts>.btn{
+  min-height:54px;
+  padding:10px;
+  text-align:center;
+ }
+ #dashboardPage #dailyUndo{grid-column:1/-1;grid-row:4}
+}
+@media(min-width:761px) and (max-width:1239px){
+ #dashboardPage #dailyHome>.planning-launch{min-height:145px}
+}
