@@ -38,6 +38,7 @@ const openServer=folder=>new Promise(done=>{
      document.getElementById(`auth`)?.classList.add(`hidden`);
      document.getElementById(`app`)?.classList.remove(`hidden`);
      document.querySelectorAll(`main .page`).forEach(el=>el.classList.toggle(`active`,el.id===`dashboardPage`));
+     document.getElementById(`salaryUpdateNotice`)?.remove();
     });
     await page.screenshot({path:path.join(out,[version,viewport.name,`dashboard-shell`].join(`-`)+`.png`),animations:`disabled`,fullPage:true});
     let cinematic=null;
@@ -75,6 +76,45 @@ const openServer=folder=>new Promise(done=>{
     report.runs.push({version,viewport:viewport.name,widths,searchChecked,collapsedChecked,mobileStoryReachable,cinematic});
     await context.close();
    }
+  }
+  /* Motion demo uses a synthetic UI-only session; never writes account data. */
+  const demoContext=await browser.newContext({
+   viewport:{width:1440,height:900},
+   reducedMotion:`no-preference`,
+   recordVideo:{dir:out,size:{width:1440,height:900}}
+  });
+  const demo=await demoContext.newPage();
+  await demo.route(`**/*`,route=>{
+   const url=route.request().url();
+   return url.startsWith(after.url)?route.continue():route.fulfill({status:204,body:``});
+  });
+  await demo.goto(after.url+`/index.html`,{waitUntil:`domcontentloaded`});
+  await demo.evaluate(()=>{
+   document.getElementById(`loader`)?.remove();
+   document.getElementById(`auth`)?.classList.add(`hidden`);
+   document.getElementById(`app`)?.classList.remove(`hidden`);
+   document.getElementById(`salaryUpdateNotice`)?.remove();
+   document.querySelectorAll(`main .page`).forEach(el=>el.classList.toggle(`active`,el.id===`dashboardPage`));
+  });
+  await demo.waitForTimeout(1200);
+  for(const route of [`transactions`,`reports`,`dashboard`]){
+   await demo.evaluate(route=>{
+    document.querySelectorAll(`main .page`).forEach(el=>el.classList.toggle(`active`,el.id===route+`Page`));
+    document.querySelectorAll(`#nav a[data-page]`).forEach(el=>{
+     const selected=el.dataset.page===route;
+     el.classList.toggle(`active`,selected);
+     if(selected)el.setAttribute(`aria-current`,`page`);else el.removeAttribute(`aria-current`);
+    });
+    window.dispatchEvent(new CustomEvent(`salary:page`,{detail:route}));
+   },route);
+   await demo.waitForTimeout(970);
+  }
+  const video=demo.video();
+  await demoContext.close();
+  if(video){
+   const generated=await video.path();
+   fs.renameSync(generated,path.join(out,`cinematic-motion-demo.webm`));
+   report.demo=`UI-only motion video, no authenticated financial workflow`;
   }
   report.reference=[];
   for(const vp of [{name:`desktop`,width:1440,height:900},{name:`mobile`,width:390,height:844}]){
