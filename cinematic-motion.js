@@ -67,7 +67,7 @@ function buildBento(){
  stage.after(details);
  details.append(metrics);
  built=true;
- observeReveal();
+ requestAnimationFrame(observeReveal);
 }
 buildBento();
 window.addEventListener(`load`,buildBento);
