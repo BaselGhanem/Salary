@@ -5,6 +5,10 @@ on:
       - 'index.html'
       - 'workspace-rebuild.css'
       - 'workspace-rebuild.js'
+      - 'cinematic-motion.js'
+      - 'cinematic-motion.css'
+      - 'sw.js'
+      - 'tests/cinematic-motion.test.cjs'
       - 'tests/workspace-rebuild.test.cjs'
       - 'qa/workspace-visual.cjs'
       - '.github/workflows/workspace-ui.yml'
@@ -28,7 +32,7 @@ jobs:
         with:
           node-version: '22'
       - name: Run static regression tests
-        run: node --test tests/workspace-rebuild.test.cjs
+        run: node --test tests/workspace-rebuild.test.cjs tests/cinematic-motion.test.cjs
       - name: Install isolated browser test dependency
         run: npm install --no-save --no-package-lock playwright
       - name: Install Chromium
