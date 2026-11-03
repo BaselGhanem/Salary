@@ -1,0 +1,45 @@
+name: Financial workspace UI checks
+on:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'workspace-rebuild.css'
+      - 'workspace-rebuild.js'
+      - 'tests/workspace-rebuild.test.cjs'
+      - 'qa/workspace-visual.cjs'
+      - '.github/workflows/workspace-ui.yml'
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout updated project
+        uses: actions/checkout@v4
+      - name: Checkout baseline for visual comparison
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: _baseline
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run static regression tests
+        run: node --test tests/workspace-rebuild.test.cjs
+      - name: Install isolated browser test dependency
+        run: npm install --no-save --no-package-lock playwright
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Capture desktop/mobile comparison and test navigation shell
+        run: node qa/workspace-visual.cjs
+      - name: Upload screenshots and browser report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: salary-workspace-before-after
+          path: workspace-screenshots/
+          if-no-files-found: warn
+          retention-days: 14
